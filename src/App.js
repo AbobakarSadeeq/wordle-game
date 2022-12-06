@@ -4,6 +4,8 @@ import NavbarComponent from "./components/navbar/navbar";
 import "bulma/css/bulma.min.css";
 import MainSectionComponent from "./components/main-section/main-section";
 
+let a = "Abobakar"
+
 function App() {
   return (
     <>
