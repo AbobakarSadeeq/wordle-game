@@ -1,0 +1,27 @@
+#gap-between-box {
+  text-align: center;
+  padding: 0px;
+  gap: 8px;
+}
+
+#gap-between-box {
+  font-size: 38px;
+  padding: 0;
+  padding-left: 0.5rem;
+  padding-right: 2.4rem;
+  color: white;
+  cursor: default;
+  min-height: 60px;
+}
+
+#gap-between-box-last {
+  font-size: 38px;
+  padding: 0;
+  height: 58px;
+  padding-left: 0.5rem;
+  padding-right: 2.4rem;
+  color: white;
+  min-height: 60px;
+
+}
+

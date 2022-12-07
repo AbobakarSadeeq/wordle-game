@@ -4,6 +4,41 @@
   width: 100%;
   position: fixed;
   border-top: 1px solid grey;
+  overflow: auto;
 }
 
- 
+.tries-and-keyboard-section {
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.tries-section {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.single-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.5%;
+  padding-bottom: 0.5%;
+}
+
+.single-box {
+  border: 2px solid grey;
+  width: 4.3%;
+  height: 100%;
+  display: block;
+  background-color: green;
+}
+
+.single-box h1 {
+  font-size: 2.2rem;
+  text-align: center;
+}
+
+/*  own css above of tries box section */
+
