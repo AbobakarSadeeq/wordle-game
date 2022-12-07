@@ -6,6 +6,7 @@ import MainSectionComponent from "./components/main-section/main-section";
 
 
 function App() {
+
   return (
     <>
       <NavbarComponent />

@@ -3,10 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { react } from "react";
 import keyboardCss from "./keyboard.module.css";
 
-const KeyboardComponent = () => {
+const KeyboardComponent = (props) => {
 
   function KeyPressHandler(keyboardKey) {
-    console.log(keyboardKey);
+    props.keyPressed(keyboardKey);
+  }
+
+  function removeCharHandler(){
+    props.removeChar();
   }
 
 
@@ -37,7 +41,7 @@ const KeyboardComponent = () => {
           <span onClick={()=>{KeyPressHandler("L")}}>L</span>
         </div>
         <div className={keyboardCss["line3"]}>
-          <span style={{'width':'110px'}}>Enter</span>
+          <span  style={{'width':'110px'}}>Enter</span>
           <span onClick={()=>{KeyPressHandler("Z")}}>Z</span>
           <span onClick={()=>{KeyPressHandler("X")}}>X</span>
           <span onClick={()=>{KeyPressHandler("C")}}>C</span>
@@ -45,7 +49,7 @@ const KeyboardComponent = () => {
           <span onClick={()=>{KeyPressHandler("B")}}>B</span>
           <span onClick={()=>{KeyPressHandler("N")}}>N</span>
           <span onClick={()=>{KeyPressHandler("M")}}>M</span>
-          <span style={{'width':'110px'}}><FontAwesomeIcon icon={faDeleteLeft}  /></span>
+          <span onClick={removeCharHandler} style={{'width':'110px', 'padding':'0', 'paddingTop':'11px'}}><FontAwesomeIcon icon={faDeleteLeft}  /></span>
         </div>
 
       </div>
