@@ -2,6 +2,15 @@ import { react, useEffect, useRef, useState } from "react";
 import KeyboardComponent from "../keyboard/keyboard";
 import TriesBoxesComponent from "../tries-boxes/tries-boxes";
 import MainSectionCss from "./main-section.module.css";
+
+
+// tommaro task
+// 1. make algo to pick up random number from 0 to 8885.
+// 2. then direct read jsonFile[randomNumber] from it.
+// 3. then apply the conditions and apply styling based condition etc.
+// 4. not enough validation and not in word list found validation required when enter pressed.
+
+
 const MainSectionComponent = () => {
   const [keyPress, setKeyPress] = useState(() => {
     return [];
@@ -13,9 +22,16 @@ const MainSectionComponent = () => {
   }
 
   // calling removing data from char list on child component 
-  const childRef = useRef();
+  const childRef  = useRef();
+
   function removeCharacterHandler(){
     childRef.current.removeCharFromListHandler();
+  }
+
+  // entering pr submitting word result
+
+  function enterWordHandler(){
+    childRef.current.submitWordHandler();
   }
 
 
@@ -35,7 +51,7 @@ const MainSectionComponent = () => {
         <div className="columns is-mobile">
           <div className="column  is-offset-2  is-8">
             {renderingTriesWithVals}
-            <KeyboardComponent keyPressed={keyboardPressedKey} removeChar={removeCharacterHandler} />
+            <KeyboardComponent keyPressed={keyboardPressedKey} removeChar={removeCharacterHandler} submittingWord={enterWordHandler} />
           </div>
         </div>
       </div>

@@ -13,6 +13,10 @@ const KeyboardComponent = (props) => {
     props.removeChar();
   }
 
+  function submitCharHandler(){
+    props.submittingWord()
+  }
+
 
   return (
     <>
@@ -41,7 +45,7 @@ const KeyboardComponent = (props) => {
           <span onClick={()=>{KeyPressHandler("L")}}>L</span>
         </div>
         <div className={keyboardCss["line3"]}>
-          <span  style={{'width':'110px'}}>Enter</span>
+          <span onClick={submitCharHandler} style={{'width':'110px'}}>Enter</span>
           <span onClick={()=>{KeyPressHandler("Z")}}>Z</span>
           <span onClick={()=>{KeyPressHandler("X")}}>X</span>
           <span onClick={()=>{KeyPressHandler("C")}}>C</span>

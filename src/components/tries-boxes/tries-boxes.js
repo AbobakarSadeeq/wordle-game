@@ -9,17 +9,29 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
 
     removeCharFromListHandler() {
-      let updateCharState = singleCharSelected; // if data is found then delete it otherwise if it is click don't do anything
-      if(updateCharState){
+       // if data is found then delete it otherwise if it is click don't do anything.
+       
+      let updateCharState = singleCharSelected;
+      if(updateCharState.length > 0){
         updateCharState.pop();
       console.log(updateCharState);
       setSingleCharSelected(()=>{
         return [...singleCharSelected];
       })
       }
+    },
+    
+
+    // submitting word
+
+    submitWordHandler(){
+      console.log("Yesss from triesBox");
     }
 
-  }));
+  })); 
+
+
+
 
   useEffect(()=>{
 
