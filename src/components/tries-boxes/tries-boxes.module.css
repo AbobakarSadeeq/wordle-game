@@ -60,7 +60,7 @@
 
 /* flipper css */
 .flipBox {
-  animation: flip 500ms ease forwards;
+  animation: flip 550ms ease forwards;
 }
 
 @keyframes flip {

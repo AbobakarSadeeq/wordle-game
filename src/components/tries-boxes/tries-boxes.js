@@ -3,10 +3,10 @@ import triesBoxCss from './tries-boxes.module.css';
 import Words from "../../data/filterWordsLengthFive.json"
 const TriesBoxesComponent = forwardRef((props, ref) => {
   
+  // selected word to find
   const [actualWord, setActualWord] = useState(()=>{
     return randomWordPickedUp();
   })
-
 
   // char added to box array
   const [singleCharSelected, setSingleCharSelected] = useState(()=>{
@@ -22,6 +22,8 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
   const [currentRow, setCurrentRow] = useState(()=>{
     return 1;
   })
+
+  
   
   // validation states
 
@@ -33,6 +35,9 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
     return false;
   });
 
+  const [charBasedBoxColor , setCharBasedBoxColor] = useState(()=>{
+    return [];
+  })
 
   useImperativeHandle(ref, () => ({
 
@@ -80,17 +85,56 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
       }
 
       // valid word but not matched with actual answer
+      let assignStylingToBoxArr = [];
       if(enteredWord !== actualWord) {
-        setCurrentRow((prevsVal) =>  {return prevsVal + 1});
-        let validWordButNotMatched = wordsTried;
-        setWordTried((prevsWords)=>{
-          return [...validWordButNotMatched, enteredWord];
-        }) 
+        
+
+          // if both index char is same then add green
+        for(var i = 0; i < 5; i++){
+
+        if(enteredWord[i] === actualWord[i]){
+          assignStylingToBoxArr.push("success");
+          continue;
+        }
+
+         // finding index for warning if the char is not in same position but in different place
+         let findingIndex = actualWord.indexOf(enteredWord[i]);
+         if(findingIndex !== -1){
+           assignStylingToBoxArr.push("warning");
+           continue;
+         }
+        
+        if(enteredWord[i] != actualWord[i]){
+          assignStylingToBoxArr.push("dark");
+        }
+
+       
 
       }
+
+
+      }else if (enteredWord === actualWord){
+
+        for(var i = 0; i < 5; i++){
+          assignStylingToBoxArr.push("success");
+        }
+
+        // add green 5 times on array of charbasedstyling
+        // reset and other things
+      }
+
+
+      setCharBasedBoxColor(()=>{
+          return [...charBasedBoxColor ,...assignStylingToBoxArr];
+        })
+
       // tries remaining
 
-
+      setCurrentRow((prevsVal) =>  {return prevsVal + 1});
+      let validWordButNotMatched = wordsTried;
+         setWordTried((prevsWords)=>{
+          return [...validWordButNotMatched, enteredWord];
+        }) 
       
       // word is found in list or valid word but not matched with the selected word so first try completed now goto second try or row
       // also find if 6 tries completed or give correct 6 words but not matched with original giving word then game over
@@ -100,17 +144,6 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
       // start the game button will be allow to interact with keyboard
       // start the game and then start the stop watch as well with it.
       // if one char is found and enterword char placed in green as well and also it is also it is also yellow on onther box as well then dont show the effect of yellow only show green that is correctly placed only.
-
-
-
-
-
-
-  
-
-       
-
-    
 
     }
 
@@ -126,7 +159,8 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
 
   useEffect(()=>{
 
-    console.log(actualWord);
+      console.log("actual word " + '"' + actualWord + '"');
+    console.log(charBasedBoxColor);
       if(props.selectedKeyValue[0]) {
 
         // telling if 5 words are wrritten then dont add more character there anymore
@@ -180,51 +214,51 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
                  */}
 
                 <div className="columns  is-centered is-mobile  py-0" id={triesBoxCss["gap-between-box"]}>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 1 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`}  id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[0]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 1 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[1]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 1 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[2]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 1 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}  >{singleCharSelected[3]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 1 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss['gap-between-box-last']} >{singleCharSelected[4]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 1 ? charBasedBoxColor[0] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 1 ? triesBoxCss['flipBox']:''  }`}  id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[0]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 1 ? charBasedBoxColor[1] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 1 ? triesBoxCss['flipBox']:''  }`}  id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[1]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 1 ? charBasedBoxColor[2] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 1 ? triesBoxCss['flipBox']:''  }`}  id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[2]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 1 ? charBasedBoxColor[3] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 1 ? triesBoxCss['flipBox']:''  }`}  id={triesBoxCss["single-gap-between-box"]}  >{singleCharSelected[3]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 1 ? charBasedBoxColor[4] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 1 ? triesBoxCss['flipBox']:''  }`}  id={triesBoxCss['gap-between-box-last']} >{singleCharSelected[4]}</div>
                 </div>
 
                 <div className="columns  is-centered is-mobile  py-0" id={triesBoxCss["gap-between-box"]}>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 2 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[5]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 2 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[6]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 2 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[7]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 2 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[8]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 2 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss['gap-between-box-last']}>{singleCharSelected[9]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 2 ? charBasedBoxColor[5] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 2 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[5]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 2 ? charBasedBoxColor[6] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 2 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[6]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 2 ? charBasedBoxColor[7] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 2 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[7]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 2 ? charBasedBoxColor[8] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 2 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[8]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 2 ? charBasedBoxColor[9] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 2 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss['gap-between-box-last']}>{singleCharSelected[9]}</div>
                 </div>
 
                 <div className="columns  is-centered is-mobile  py-0" id={triesBoxCss["gap-between-box"]}>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 3 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[10]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 3 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[11]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 3 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[12]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 3 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[13]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 3 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss['gap-between-box-last']}>{singleCharSelected[14]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 3 ? charBasedBoxColor[10] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 3 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[10]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 3 ? charBasedBoxColor[11] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 3 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[11]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 3 ? charBasedBoxColor[12] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 3 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[12]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 3 ? charBasedBoxColor[13] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 3 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[13]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 3 ? charBasedBoxColor[14] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 3 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss['gap-between-box-last']}>{singleCharSelected[14]}</div>
                 </div>
 
                 <div className="columns  is-centered is-mobile  py-0" id={triesBoxCss["gap-between-box"]}>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 4 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[15]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 4 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[16]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 4 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[17]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 4 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[18]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 4 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss['gap-between-box-last']}>{singleCharSelected[19]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 4 ? charBasedBoxColor[15] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 4 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[15]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 4 ? charBasedBoxColor[16] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 4 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[16]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 4 ? charBasedBoxColor[17] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 4 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[17]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 4 ? charBasedBoxColor[18] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 4 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[18]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 4 ? charBasedBoxColor[19] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 4 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss['gap-between-box-last']}>{singleCharSelected[19]}</div>
                 </div>
 
                 <div className="columns  is-centered is-mobile  py-0" id={triesBoxCss["gap-between-box"]}>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[20]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[21]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[22]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[23]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss['gap-between-box-last']}>{singleCharSelected[24]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? charBasedBoxColor[20] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[20]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? charBasedBoxColor[21] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[21]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? charBasedBoxColor[22] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[22]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? charBasedBoxColor[23] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[23]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? charBasedBoxColor[24] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss['gap-between-box-last']}>{singleCharSelected[24]}</div>
                 </div>
                 
                 <div className="columns  is-centered is-mobile  py-0" id={triesBoxCss["gap-between-box"]}>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[25]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[26]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[27]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[28]}</div>
-                  <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? 'dark' : 'black'} has-text-white has-text-weight-bold py-0  ${triesBoxCss['flipBox']}`} id={triesBoxCss['gap-between-box-last']}>{singleCharSelected[29]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? charBasedBoxColor[25] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[25]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? charBasedBoxColor[26] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[26]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? charBasedBoxColor[27] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[27]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? charBasedBoxColor[28] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[28]}</div>
+                  <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? charBasedBoxColor[29] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss['gap-between-box-last']}>{singleCharSelected[29]}</div>
                 </div>
               </div>
 
