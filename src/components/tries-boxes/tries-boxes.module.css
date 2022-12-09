@@ -14,14 +14,67 @@
   min-height: 60px;
 }
 
+/* box styling */
+
+
+
+#single-gap-between-box {
+  font-size: 38px;
+  padding: 0;
+  padding-left: 0.5rem;
+  padding-right: 2.4rem;
+  cursor: default;
+  min-height: 65px;
+  border: 2px solid grey;
+
+}
+
 #gap-between-box-last {
   font-size: 38px;
   padding: 0;
   height: 58px;
   padding-left: 0.5rem;
   padding-right: 2.4rem;
-  color: white;
-  min-height: 60px;
-
+  min-height: 65px;
+  border: 2px solid grey;
 }
 
+/* box styling complete */
+
+/* validation error on not word list found and not enough letters */
+.validation-error {
+  margin-top: 1rem;
+  background-color: rgb(227, 227, 221);
+  color: black;
+  font-size: 1.3rem;
+  max-width: 20%;
+  border-radius: 10px;
+  padding: 16px;
+  font-weight: 500;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* green box when char is on correct position */
+
+/* flipper css */
+.flipBox {
+  animation: flip 500ms ease forwards;
+}
+
+@keyframes flip {
+  0% {
+    transform: scaleY(1);
+  } 
+
+  50% {
+    transform: scaleY(0);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+ 

@@ -5,8 +5,6 @@ import MainSectionCss from "./main-section.module.css";
 
 
 // tommaro task
-// 1. make algo to pick up random number from 0 to 8885.
-// 2. then direct read jsonFile[randomNumber] from it.
 // 3. then apply the conditions and apply styling based condition etc.
 // 4. not enough validation and not in word list found validation required when enter pressed.
 

@@ -14,7 +14,7 @@ const NavbarComponent = () => {
 
         </div>
 
-        {/* <div className="navbar-menu is-inline">
+        <div className="navbar-menu is-inline">
           <div className="navbar-end ">
           <p id={NavbarCss['project-name']} className="is-hidden-mobile is-hidden-tablet-only">Paen Wordle </p>
 
@@ -27,7 +27,7 @@ const NavbarComponent = () => {
             </a>
 
           </div>
-        </div> */}
+        </div> 
       </nav>
     </>
   );
