@@ -1,6 +1,6 @@
 import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { react } from "react";
+import { react, useCallback, useEffect } from "react";
 import keyboardCss from "./keyboard.module.css";
 
 const KeyboardComponent = (props) => {
@@ -14,15 +14,38 @@ const KeyboardComponent = (props) => {
   }
 
   function submitCharHandler(){
-    props.submittingWord()
+    props.submittingWord();
   }
+
+
+  const keyBoardKeyPressedByKeyboard = useCallback((event) => {
+    if(/^[a-zA-Z]+$/.test(event.key) && event.key.length === 1){
+      const singleLetter = event.key.toString().toUpperCase();
+      props.keyPressed(singleLetter);
+    }
+
+    if(event.key === "Backspace"){
+      props.removeChar();
+    }
+
+    if(event.key === "Enter"){
+      props.submittingWord();
+    }
+
+
+   
+  })
+
+  useEffect(()=>{
+    document.addEventListener("keydown", keyBoardKeyPressedByKeyboard , false);
+  },[])
 
 
   return (
     <>
       <div id={keyboardCss["base"]}>
        <div className={keyboardCss["line1"]}>
-          <span onClick={()=>{KeyPressHandler("Q")}}>Q</span>
+          <span onClick={()=>{KeyPressHandler("Q")}} onKeyPress={()=>{KeyPressHandler("Q")}}>Q</span>
           <span onClick={()=>{KeyPressHandler("W")}}>W</span>
           <span onClick={()=>{KeyPressHandler("E")}}>E</span>
           <span onClick={()=>{KeyPressHandler("R")}}>R</span>
