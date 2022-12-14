@@ -61,10 +61,13 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
       let subtractFromCurrentRowOnly = (singleCharSelected.length - completedRow * 5);
 
       if(subtractFromCurrentRowOnly > 0){
-        updateCharState.pop();
-      setSingleCharSelected(()=>{
-        return [...singleCharSelected];
-      })
+        if(updateCharState[updateCharState.length-1] !== " "){
+          updateCharState.pop();
+          setSingleCharSelected(()=>{
+            return [...singleCharSelected];
+          })
+        }
+       
       }
     },
     
@@ -73,6 +76,10 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
 
     submitWordHandler(){
       applyFlip();
+
+      if(wordsTried[wordsTried.length-1] === actualWord){
+        return;
+      }
 
       // check the length of word added if less then 5 then return nothing
       if(currentRow * 5 !== singleCharSelected.length){
@@ -88,7 +95,7 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
       const enteredWord = singleCharSelected.slice(singleCharSelected.length - 5, singleCharSelected.length).join("").toLowerCase();
       // not valid word or not found inside list
 
-      if(wordsList.findIndex(a=>a === enteredWord)=== -1){
+      if(wordsList.findIndex(a=>a === enteredWord) === -1){
         setNotFoundWordInList(true);
         setTimeout(()=>{
           setNotFoundWordInList(false);
@@ -157,11 +164,6 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
         if(enteredWord !== actualWord)
            setGameOverDialog(true);
       }
-      
-      // word is found in list or valid word but not matched with the selected word so first try completed now goto second try or row
-      // also find if 6 tries completed or give correct 6 words but not matched with original giving word then game over
-      // when try again or play again clicked then clean everything
-
     }
 
   })); 
