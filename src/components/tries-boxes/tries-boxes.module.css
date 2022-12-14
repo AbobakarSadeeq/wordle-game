@@ -177,10 +177,13 @@
 /* refresh page */
 .refreshPage{
   color: white;
+  text-decoration: underline;
+
 }
 
 .refreshPage:hover {
-  text-decoration: underline;
   color: white;
+  text-decoration: none;
+
 
 }

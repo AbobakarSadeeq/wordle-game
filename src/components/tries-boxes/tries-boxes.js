@@ -169,7 +169,6 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
 
   // game over dialog
   function playAgainResetGameHandler(){
-    // new word pickup
     setActualWord(()=>{
       return randomWordPickedUp();
     });
@@ -197,6 +196,8 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
 
 
   }
+
+  // dont want to play again
   
   function noResetGameHandler(){
     setGameOverDialog(false);
