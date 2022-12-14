@@ -131,8 +131,13 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
           assignStylingToBoxArr.push("success");
         }
 
-        // add green 5 times on array of charbasedstyling
-        // reset and other things
+        setCurrentRow(6);
+        let getSingleCharSelected = singleCharSelected;
+        for(var i = singleCharSelected.length -1; i<= 36; i++){
+          getSingleCharSelected.push(" ");
+        }
+
+        setNotPlayAgain(true);
       }
 
 
@@ -149,7 +154,8 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
         }) 
       
       if(validWordButNotMatched.length + 1 >= 6){
-        setGameOverDialog(true);
+        if(enteredWord !== actualWord)
+           setGameOverDialog(true);
       }
       
       // word is found in list or valid word but not matched with the selected word so first try completed now goto second try or row
