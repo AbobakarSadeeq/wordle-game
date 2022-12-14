@@ -1,6 +1,8 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import triesBoxCss from './tries-boxes.module.css';
 import Words from "../../data/filterWordsLengthFive.json"
+import { Dialog } from "primereact/dialog";
+import classNames from "classnames";
 const TriesBoxesComponent = forwardRef((props, ref) => {
   
   // selected word to find
@@ -37,6 +39,16 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
 
   const [charBasedBoxColor , setCharBasedBoxColor] = useState(()=>{
     return [];
+  })
+
+  // game over try again prompt
+  const [gameOverDialog, setGameOverDialog] = useState(()=>{
+    return false;
+  })
+
+  // no clicked styling handling
+  const [notPlayAgain, setNotPlayAgain] = useState(()=>{
+    return false;
   })
 
   useImperativeHandle(ref, () => ({
@@ -136,14 +148,13 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
           return [...validWordButNotMatched, enteredWord];
         }) 
       
+      if(validWordButNotMatched.length + 1 >= 6){
+        setGameOverDialog(true);
+      }
+      
       // word is found in list or valid word but not matched with the selected word so first try completed now goto second try or row
       // also find if 6 tries completed or give correct 6 words but not matched with original giving word then game over
-      // also if any char is in same or good position then that box will become green
-      // also if any char is not in position but that char is inside this word then add the yellow box to it.
       // when try again or play again clicked then clean everything
-      // start the game button will be allow to interact with keyboard
-      // start the game and then start the stop watch as well with it.
-      // if one char is found and enterword char placed in green as well and also it is also it is also yellow on onther box as well then dont show the effect of yellow only show green that is correctly placed only.
 
     }
 
@@ -156,11 +167,45 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
     return singleWord;
   }
 
+  // game over dialog
+  function playAgainResetGameHandler(){
+    // new word pickup
+    setActualWord(()=>{
+      return randomWordPickedUp();
+    });
+
+    setSingleCharSelected(()=>{
+      return [];
+    });
+
+    setCharBasedBoxColor(()=>{
+      return [];
+    })
+
+    setWordTried(()=>{
+      return [];
+    })
+
+    setCurrentRow(()=>{
+      return 1;
+    })
+
+    setGameOverDialog(()=>{
+      return false;
+    })
+
+
+
+  }
+  
+  function noResetGameHandler(){
+    setGameOverDialog(false);
+    setNotPlayAgain(true);
+  }
+
 
   useEffect(()=>{
-
       console.log("actual word " + '"' + actualWord + '"');
-    console.log(charBasedBoxColor);
       if(props.selectedKeyValue[0]) {
 
         // telling if 5 words are wrritten then dont add more character there anymore
@@ -266,6 +311,43 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
               
             </div>
             </section>
+
+     {notPlayAgain ? <><h1 style={{color:'white', textAlign:'center', fontSize:"1.5rem"}}>Wanna play again? <b><a href="/" className={triesBoxCss['refreshPage']}>Refresh the page!</a></b></h1><br /> </>: null}
+
+        
+        {/* game over play again */}
+
+        
+      {gameOverDialog ? (
+        <Dialog
+          visible={true}
+          breakpoints={{ "960px": "75vw", "640px": "100vw" }}
+          style={{ width: "30vw" }}
+          header="Game End!"
+          headerStyle={{ backgroundColor: "#121213", color: "white" }}
+          contentStyle={{ backgroundColor: "#121213", color: "white" }}
+          draggable={false}
+          closable={false}
+        >
+
+        <h1 className={triesBoxCss['actualWordOnGameOver']}>Word is: <b>{actualWord}</b></h1>
+
+        <h1 className={triesBoxCss['gameOver']}>GAME OVER</h1>
+        
+
+        <h2 className={triesBoxCss['playGame']}>PLAY AGAIN?</h2>
+
+        <div className={triesBoxCss["yesAndNo"]}>
+        <button onClick={playAgainResetGameHandler} style={{backgroundColor:'#55d155', width:'170px', height:'50px'}} className={classNames(triesBoxCss["customBtn"], triesBoxCss["btn4"], "")}>YES</button>
+        <button onClick={noResetGameHandler} style={{backgroundColor:'red', width:'170px', height:'50px'}}  className={classNames(triesBoxCss["customBtn"], triesBoxCss["btn4"])}>NO</button>
+        </div>
+
+          
+        </Dialog>
+      ) : null}
+
+        {/* word are guess on the given try */}
+
       </>
    )
 });

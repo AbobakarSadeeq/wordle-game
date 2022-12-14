@@ -1,9 +1,13 @@
 import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { react, useCallback, useEffect } from "react";
+import { react, useCallback, useEffect, useState } from "react";
 import keyboardCss from "./keyboard.module.css";
 
 const KeyboardComponent = (props) => {
+
+  const [startGame, setStartGame] = useState(()=>{
+    return false;
+  })
 
   function KeyPressHandler(keyboardKey) {
     props.keyPressed(keyboardKey);
@@ -17,8 +21,15 @@ const KeyboardComponent = (props) => {
     props.submittingWord();
   }
 
+  function startGameHandler(){
+    setStartGame(true);
+  }
+
 
   const keyBoardKeyPressedByKeyboard = useCallback((event) => {
+
+    // if game is started then allow to write something otherwise not
+    if(startGame){
     if(/^[a-zA-Z]+$/.test(event.key) && event.key.length === 1){
       const singleLetter = event.key.toString().toUpperCase();
       props.keyPressed(singleLetter);
@@ -31,6 +42,7 @@ const KeyboardComponent = (props) => {
     if(event.key === "Enter"){
       props.submittingWord();
     }
+  }
 
 
    
@@ -38,12 +50,17 @@ const KeyboardComponent = (props) => {
 
   useEffect(()=>{
     document.addEventListener("keydown", keyBoardKeyPressedByKeyboard , false);
-  },[])
+  },[startGame])
 
 
   return (
     <>
-      <div id={keyboardCss["base"]}>
+    
+    {/* start game button */}
+    {startGame ? null : <div className="has-text-centered"><button onClick={startGameHandler} className="button is-success is-large is-rounded" >Start game!</button></div>}
+
+    {/* keyboard */}
+    {startGame ?  <div id={keyboardCss["base"]}>
        <div className={keyboardCss["line1"]}>
           <span onClick={()=>{KeyPressHandler("Q")}} onKeyPress={()=>{KeyPressHandler("Q")}}>Q</span>
           <span onClick={()=>{KeyPressHandler("W")}}>W</span>
@@ -79,7 +96,9 @@ const KeyboardComponent = (props) => {
           <span onClick={removeCharHandler} style={{'width':'110px', 'padding':'0', 'paddingTop':'11px'}}><FontAwesomeIcon icon={faDeleteLeft}  /></span>
         </div>
 
-      </div>
+      </div> : null}
+     
+      
     </>
   );
 };

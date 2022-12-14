@@ -16,8 +16,6 @@
 
 /* box styling */
 
-
-
 #single-gap-between-box {
   font-size: 38px;
   padding: 0;
@@ -26,7 +24,6 @@
   cursor: default;
   min-height: 65px;
   border: 2px solid grey;
-
 }
 
 #gap-between-box-last {
@@ -66,7 +63,7 @@
 @keyframes flip {
   0% {
     transform: scaleY(1);
-  } 
+  }
 
   50% {
     transform: scaleY(0);
@@ -77,4 +74,113 @@
   }
 }
 
- 
+/* Yes and no button css */
+
+/* 4 */
+.btn4 {
+  position: relative;
+  color: white;
+  z-index: 2;
+  padding: 0;
+  border-radius: 5%;
+  width: 170px;
+  height: 60px;
+  font-size: 1.3rem;
+
+}
+.btn4:hover {
+  border: none;
+}
+.btn4:before,
+.btn4:after {
+  position: absolute;
+  content: "";
+  width: 0%;
+  height: 0%;
+  border: 2px solid;
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+.btn4:before {
+  top: 0;
+  left: 0;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+  border-top-color: white;
+  border-left-color: white;
+}
+.btn4:after {
+  bottom: 0;
+  right: 0;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-bottom-color: white;;
+  border-right-color: white;;
+}
+.btn4:hover:before,
+.btn4:hover:after {
+  border-color: white;;
+  height: 100%;
+  width: 100%;
+}
+
+.customBtn {
+  width: 130px;
+  height: 40px;
+  padding: 10px 25px;
+  border: 2px solid #000;
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+
+.yesAndNo {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.customBtn {
+  margin: 20px;
+  outline: none;
+}
+
+/*  game over text styling */
+
+.gameOver {
+  font-family: sans-serif;
+  font-size: 5rem;
+  text-align: center;
+}
+
+/* play game */
+
+.playGame {
+  font-family: 'Game Over', sans-serif;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+/* actual word */
+.actualWordOnGameOver{
+  font-family: 'Game Over', sans-serif;
+  font-size: 2rem;
+  text-align: center;
+
+}
+
+/* refresh page */
+.refreshPage{
+  color: white;
+}
+
+.refreshPage:hover {
+  text-decoration: underline;
+  color: white;
+
+}

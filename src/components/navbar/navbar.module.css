@@ -3,3 +3,13 @@
    margin-left: auto;
    font-size: 2rem;
 }
+
+:host >>> .customDialog {
+   background-color: red;
+   color: green;
+}
+
+.ui-dialog.ui-widget-content {
+   background-image: none;
+   background-color: red;
+}
