@@ -103,6 +103,9 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
         return;
       }
 
+      // keyboard color changing array when word is valid
+      let keyboardSingleKeyStyle = [];
+
       // valid word but not matched with actual answer
       let assignStylingToBoxArr = [];
       if(enteredWord !== actualWord) {
@@ -113,6 +116,7 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
 
         if(enteredWord[i] === actualWord[i]){
           assignStylingToBoxArr.push("success");
+          keyboardSingleKeyStyle.push({singleAlph:enteredWord[i].toUpperCase(), color:"success"});
           continue;
         }
 
@@ -120,11 +124,15 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
          let findingIndex = actualWord.indexOf(enteredWord[i]);
          if(findingIndex !== -1){
            assignStylingToBoxArr.push("warning");
+          keyboardSingleKeyStyle.push({singleAlph:enteredWord[i].toUpperCase(), color:"warning"});
+
            continue;
          }
         
         if(enteredWord[i] != actualWord[i]){
           assignStylingToBoxArr.push("dark");
+          keyboardSingleKeyStyle.push({singleAlph:enteredWord[i].toUpperCase(), color:"dark"});
+
         }
 
        
@@ -135,6 +143,7 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
       }else if (enteredWord === actualWord){
 
         for(var i = 0; i < 5; i++){
+          keyboardSingleKeyStyle.push({singleAlph:enteredWord[i].toUpperCase(), color:"success"});
           assignStylingToBoxArr.push("success");
         }
 
@@ -164,6 +173,14 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
         if(enteredWord !== actualWord)
            setGameOverDialog(true);
       }
+
+
+      // keyboard color changing effect algorithm
+      props.keyboardStylingArr(keyboardSingleKeyStyle)
+
+
+
+
     }
 
   })); 
@@ -201,6 +218,9 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
       return false;
     })
 
+    
+    props.keyboardStylingArr([{singleAlph:"", color:""}])
+    
 
 
   }

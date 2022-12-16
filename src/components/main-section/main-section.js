@@ -4,15 +4,17 @@ import TriesBoxesComponent from "../tries-boxes/tries-boxes";
 import MainSectionCss from "./main-section.module.css";
 
 
-// tommaro task
-// 3. then apply the conditions and apply styling based condition etc.
-// 4. not enough validation and not in word list found validation required when enter pressed.
+ 
 
 
 const MainSectionComponent = () => {
   const [keyPress, setKeyPress] = useState(() => {
     return [];
   });
+
+  const [keyboardAlphaStyling, setKeyboardAlphStyling] = useState(()=>{
+    return [];
+  })
 
   function keyboardPressedKey(val) {
     let singleChar = [val];
@@ -33,6 +35,15 @@ const MainSectionComponent = () => {
   }
 
 
+  // keyboard styling handling
+  function keyboardAlphKey(arr){
+
+    setKeyboardAlphStyling(()=>{
+      return [...arr];
+    })
+  }
+
+
 
 
 
@@ -40,7 +51,7 @@ const MainSectionComponent = () => {
   if(keyPress === ""){
     renderingTriesWithVals =   <TriesBoxesComponent />
   }else {
-    renderingTriesWithVals =  <TriesBoxesComponent selectedKeyValue={keyPress} ref={childRef} />
+    renderingTriesWithVals =  <TriesBoxesComponent selectedKeyValue={keyPress} ref={childRef} keyboardStylingArr={keyboardAlphKey}  />
   }
 
   return (
@@ -49,7 +60,7 @@ const MainSectionComponent = () => {
         <div className="columns is-mobile">
           <div className="column  is-offset-2  is-8">
             {renderingTriesWithVals}
-            <KeyboardComponent keyPressed={keyboardPressedKey} removeChar={removeCharacterHandler} submittingWord={enterWordHandler} />
+            <KeyboardComponent keyPressed={keyboardPressedKey} removeChar={removeCharacterHandler} submittingWord={enterWordHandler} KeyboardKeyWordPressedStyling={keyboardAlphaStyling} />
           </div>
         </div>
       </div>

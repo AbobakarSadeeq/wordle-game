@@ -40,12 +40,13 @@ div[class*="line"] + div[class*="line"] {
 
 div[class*="line"] span {
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.7);
-  color: #cacbcb;
+  color: white;
   padding: 15px;
   background: #838383;
   border-radius: 12px;
   width: 55px;
   text-align: center;
+  font-weight: 600;
 }
 
 div[class*="line"] span:hover {
@@ -98,5 +99,11 @@ div[class*="line"] span:active {
   fill: #71d4fe;
   width: 35px;
   height: 35px;
+
+}
+
+
+.hoverBtn:hover {
+  background: #2f3336 !important; 
 
 }
