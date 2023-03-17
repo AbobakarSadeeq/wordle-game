@@ -4,7 +4,7 @@ span {
   -ms-user-select: none;
   user-select: none;
 }
-#base {
+.base {
   border-radius: 10px;
   display: flex;
   width: 800px;
@@ -104,6 +104,14 @@ div[class*="line"] span:active {
 
 
 .hoverBtn:hover {
-  background: #2f3336 !important; 
+  background: #2f3336 !important;
 
 }
+
+
+@media (max-width:64rem) {
+  .base {
+    width: 0px;
+  }
+}
+ 

@@ -13,3 +13,9 @@
    background-image: none;
    background-color: red;
 }
+
+@media (max-width:64rem) {
+   #project-name{
+      text-align: center;
+   }
+}
