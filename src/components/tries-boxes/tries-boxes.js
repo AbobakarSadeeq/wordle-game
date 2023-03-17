@@ -4,7 +4,7 @@ import Words from "../../data/filterWordsLengthFive.json"
 import { Dialog } from "primereact/dialog";
 import classNames from "classnames";
 const TriesBoxesComponent = forwardRef((props, ref) => {
-  
+
   // selected word to find
   const [actualWord, setActualWord] = useState(()=>{
     return randomWordPickedUp();
@@ -25,8 +25,8 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
     return 1;
   })
 
-  
-  
+
+
   // validation states
 
   const [wordPressedLength, setWordPressedLength] = useState(()=>{
@@ -67,10 +67,10 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
             return [...singleCharSelected];
           })
         }
-       
+
       }
     },
-    
+
 
     // submitting word
 
@@ -109,7 +109,7 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
       // valid word but not matched with actual answer
       let assignStylingToBoxArr = [];
       if(enteredWord !== actualWord) {
-        
+
 
           // if both index char is same then add green
         for(var i = 0; i < 5; i++){
@@ -128,14 +128,14 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
 
            continue;
          }
-        
+
         if(enteredWord[i] != actualWord[i]){
           assignStylingToBoxArr.push("dark");
           keyboardSingleKeyStyle.push({singleAlph:enteredWord[i].toUpperCase(), color:"dark"});
 
         }
 
-       
+
 
       }
 
@@ -167,8 +167,8 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
       let validWordButNotMatched = wordsTried;
          setWordTried((prevsWords)=>{
           return [...validWordButNotMatched, enteredWord];
-        }) 
-      
+        })
+
       if(validWordButNotMatched.length + 1 >= 6){
         if(enteredWord !== actualWord)
            setGameOverDialog(true);
@@ -183,7 +183,7 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
 
     }
 
-  })); 
+  }));
 
 
   function randomWordPickedUp(){
@@ -218,15 +218,15 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
       return false;
     })
 
-    
+
     props.keyboardStylingArr([{singleAlph:"", color:""}])
-    
+
 
 
   }
 
   // dont want to play again
-  
+
   function noResetGameHandler(){
     setGameOverDialog(false);
     setNotPlayAgain(true);
@@ -246,10 +246,10 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
 
         // when 4 then also execute and then it will be become 5 so, next time it will not do the execution
       }
-     
+
     }
-   
-    
+
+
   },[props.selectedKeyValue])
 
 
@@ -265,26 +265,26 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
   }
 
 
-  
+
    return (
       <>
-     
+
      {wordPressedLength ?<div className={triesBoxCss['validation-error']}>Not enough letters</div> : null}
      {notFoundWordInList ?<div className={triesBoxCss['validation-error']}>Not in word list</div> : null}
 
 
-               <section className="section">
+               <section className={triesBoxCss["section"]}>
             <div className="columns  is-centered ">
               <div
                 className="column  is-one-third "
               >
                 {/* single-row-column */}
 
-                {/* 
+                {/*
                 grey dark color when no entered char is in inside the word
                 bg sucess when char is on correct position and same text color
                 bg warning when char is found but not in correct position and same color
-                
+
                  */}
 
                 <div className="columns  is-centered is-mobile  py-0" id={triesBoxCss["gap-between-box"]}>
@@ -326,7 +326,7 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
                   <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? charBasedBoxColor[23] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[23]}</div>
                   <div className={`column is-1 box has-background-${wordsTried.length >= 5 ? charBasedBoxColor[24] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss['gap-between-box-last']}>{singleCharSelected[24]}</div>
                 </div>
-                
+
                 <div className="columns  is-centered is-mobile  py-0" id={triesBoxCss["gap-between-box"]}>
                   <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? charBasedBoxColor[25] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]} >{singleCharSelected[25]}</div>
                   <div className={`column is-1 box has-background-${wordsTried.length >= 6 ? charBasedBoxColor[26] : 'black'} has-text-white has-text-weight-bold py-0  ${wordsTried.length === 5 ? triesBoxCss['flipBox']:''  }`} id={triesBoxCss["single-gap-between-box"]}>{singleCharSelected[26]}</div>
@@ -336,17 +336,17 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
                 </div>
               </div>
 
-              
-              
+
+
             </div>
             </section>
 
      {notPlayAgain ? <><h1 style={{color:'white', textAlign:'center', fontSize:"1.5rem"}}>Wanna play again? <b><a href="/" className={triesBoxCss['refreshPage']}>Refresh the page!</a></b></h1><br /> </>: null}
 
-        
+
         {/* game over play again */}
 
-        
+
       {gameOverDialog ? (
         <Dialog
           visible={true}
@@ -362,7 +362,7 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
         <h1 className={triesBoxCss['actualWordOnGameOver']}>Word is: <b>{actualWord}</b></h1>
 
         <h1 className={triesBoxCss['gameOver']}>GAME OVER</h1>
-        
+
 
         <h2 className={triesBoxCss['playGame']}>PLAY AGAIN?</h2>
 
@@ -371,7 +371,7 @@ const TriesBoxesComponent = forwardRef((props, ref) => {
         <button onClick={noResetGameHandler} style={{backgroundColor:'red', width:'170px', height:'50px'}}  className={classNames(triesBoxCss["customBtn"], triesBoxCss["btn4"])}>NO</button>
         </div>
 
-          
+
         </Dialog>
       ) : null}
 

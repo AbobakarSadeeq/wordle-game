@@ -476,44 +476,5 @@ const KeyboardComponent = (props) => {
 
 export default KeyboardComponent;
 
-function customPromise(dataReciveFromComponent) {
-  return new Promise((resolve, reject) => {
-    if (1 + 1 == 2) {
-      resolve("yes");
-    } else {
-      reject("no");
-    }
-  });
-}
+ 
 
-(async function () {
-  try {
-    const data = await customPromise();
-    console.log(data);
-  } catch (err) {
-    console.log(err);
-  }
-})();
-
-console.log("Abobakar");
-
-// the above code is already delay becuase console.log execute first and then asynchronous function execute.
-
-const promise = (n = 1000) =>
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve("resolved");
-    }, n);
-  });
-
-async function testPromise(n = 1000) {
-  await promise(n);
-  console.log("promise finished #1");
-  promise(n).then(() => {
-    console.log("promise finished #2");
-  });
-}
-
-console.log("begin");
-testPromise(5000);
-console.log("end");
