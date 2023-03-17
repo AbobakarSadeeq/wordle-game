@@ -187,3 +187,11 @@
 
 
 }
+
+@media (max-width:64rem) {
+  .base {
+    width: 0px;
+
+  }
+}
+

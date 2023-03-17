@@ -108,10 +108,26 @@ div[class*="line"] span:active {
 
 }
 
+.removeChar {
+  width: 110px;
+  padding: 0;
+  padding-top: 11px;
+}
+
+@media (max-width:24rem) {
+  .base {
+    width: 0;
+    margin-right: 7.6rem;
+    font-size: 0.5rem;
+  }
+}
+
 
 @media (max-width:64rem) {
   .base {
     width: 0px;
+
   }
 }
- 
+
+

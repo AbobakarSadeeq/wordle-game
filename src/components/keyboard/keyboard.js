@@ -463,7 +463,7 @@ const KeyboardComponent = (props) => {
             </span>
             <span
               onClick={removeCharHandler}
-              style={{ width: "110px", padding: "0", paddingTop: "11px" }}
+              className={keyboardCss.removeChar}
             >
               <FontAwesomeIcon icon={faDeleteLeft} />
             </span>
