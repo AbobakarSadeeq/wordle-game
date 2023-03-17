@@ -4,6 +4,7 @@
   width: 100%;
   position: fixed;
   border-top: 1px solid grey;
+  overflow: scroll;
 }
 
 .tries-and-keyboard-section {
